@@ -14,3 +14,6 @@ dependencies = [
 
 [project.scripts]
 worldcodex-art = "worldcodex_art.main:main"
+
+[tool.setuptools]
+packages = ["worldcodex_art"]
