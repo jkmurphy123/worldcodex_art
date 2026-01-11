@@ -12,8 +12,8 @@ class WorldBible:
     text: str
 
 
-def load_world_bible(path: Path) -> WorldBible:
-    p = path.expanduser().resolve()
+def load_world_bible(path: str | Path) -> WorldBible:
+    p = Path(path).expanduser().resolve()
     if not p.exists():
         raise FileNotFoundError(f"world_bible.md not found: {p}")
     if p.suffix.lower() not in {".md", ".markdown"}:
