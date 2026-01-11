@@ -11,7 +11,9 @@ from .paths import get_project_config_path, ensure_dir
 class WorldConfig:
     world_bible_path: str | None = None
     world_bible_sha256: str | None = None
-
+    world_bible_json_path: str | None = None
+    world_bible_json_sha256: str | None = None
+    
 
 @dataclass
 class ArtConfig:
