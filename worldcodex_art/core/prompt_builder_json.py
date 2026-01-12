@@ -44,6 +44,7 @@ def build_prompt_from_world_json(
     style_profile_id: str | None = None,
     palette_name: str | None = None,
     render_intent: str | None = None,
+    image_style: str | None = None,
     # user overrides
     negative_override: str | None = None,
 ) -> PromptPackage:
@@ -159,6 +160,9 @@ def build_prompt_from_world_json(
 
     parts.extend(_bullets("Always true", always_true, max_items=5))
 
+    if image_style:
+        parts.extend(_bullets("Image style override", [image_style], max_items=1))
+
     # Subject last, like a clap of thunder
     parts.append("SUBJECT:")
     parts.append(subject.strip())
@@ -199,6 +203,7 @@ def build_prompt_from_world_json(
             "style_profile_id": style_profile_id,
             "palette_name": palette_name,
             "render_intent": render_intent,
+            "image_style": image_style,
             "negative_terms": len(negatives_deduped),
         },
     )

@@ -4,6 +4,7 @@ from pathlib import Path
 import typer
 
 from worldcodex_art.core.config import load_config
+from worldcodex_art.core.dry_run import format_dry_run_output
 from worldcodex_art.core.registry import PROVIDERS
 from worldcodex_art.providers.base import ImageRequest
 
@@ -21,6 +22,7 @@ def gen(
     subject: str = typer.Argument(...),
     n: int = typer.Option(1, "--n", min=1, max=8),
     out_dir: Path = typer.Option(Path(".worldcodex_art/outputs"), "--out"),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Print prompt and request without generating images"),
     seed: int | None = typer.Option(None, "--seed"),
     place: str | None = typer.Option(None, "--place", help="Place id from world JSON"),
     character: str | None = typer.Option(None, "--character", help="Character id from world JSON"),
@@ -29,6 +31,11 @@ def gen(
     motif: list[str] = typer.Option([], "--motif", help="Motif id (repeatable)"),
     style_profile: str | None = typer.Option(None, "--style-profile", help="World style profile id"),
     palette: str | None = typer.Option(None, "--palette", help="World palette name"),
+    image_style: str | None = typer.Option(
+        None,
+        "--image-style",
+        help="Image style override separate from world styles",
+    ),
 ):
     cfg = load_config()
 
@@ -51,6 +58,7 @@ def gen(
             style_profile_id=style_profile,
             palette_name=palette,
             render_intent=cfg.art.render_intent,
+            image_style=image_style,
             negative_override=cfg.art.negative,
         )
 
@@ -61,9 +69,19 @@ def gen(
             n=n,
             seed=seed,
             style_profile=style_profile or cfg.art.style_profile,
+            image_style=image_style,
             render_intent=cfg.art.render_intent,
             extra={"source": "world_json", "debug": pkg.debug},
         )
+        if dry_run:
+            for line in format_dry_run_output(
+                req,
+                provider_name=cfg.provider.name,
+                model=cfg.provider.model,
+                out_dir=out_dir,
+            ):
+                typer.echo(line)
+            return
         res = provider.generate(req, out_dir=out_dir)
         typer.echo(f"provider: {res.provider}")
         for p in res.images:
@@ -83,6 +101,7 @@ def gen(
         size=cfg.art.size,
         palette=cfg.art.palette,
         negative=cfg.art.negative,
+        image_style=image_style,
     )
     req = ImageRequest(
         prompt=pkg_md.prompt,
@@ -91,9 +110,19 @@ def gen(
         n=n,
         seed=seed,
         style_profile=cfg.art.style_profile,
+        image_style=image_style,
         render_intent=cfg.art.render_intent,
         extra={"source": "world_md"},
     )
+    if dry_run:
+        for line in format_dry_run_output(
+            req,
+            provider_name=cfg.provider.name,
+            model=cfg.provider.model,
+            out_dir=out_dir,
+        ):
+            typer.echo(line)
+        return
     res = provider.generate(req, out_dir=out_dir)
     typer.echo(f"provider: {res.provider}")
     for p in res.images:

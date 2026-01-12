@@ -22,6 +22,11 @@ def preview(
     motif: list[str] = typer.Option([], "--motif", help="Motif id (repeatable)"),
     style_profile: str | None = typer.Option(None, "--style-profile", help="World style profile id"),
     palette: str | None = typer.Option(None, "--palette", help="World palette name"),
+    image_style: str | None = typer.Option(
+        None,
+        "--image-style",
+        help="Image style override separate from world styles",
+    ),
 ):
     cfg = load_config()
 
@@ -39,6 +44,7 @@ def preview(
             style_profile_id=style_profile,
             palette_name=palette,
             render_intent=cfg.art.render_intent,
+            image_style=image_style,
             negative_override=cfg.art.negative,
         )
 
@@ -64,6 +70,7 @@ def preview(
         size=cfg.art.size,
         palette=cfg.art.palette,
         negative=cfg.art.negative,
+        image_style=image_style,
     )
     typer.echo("----- PROMPT (MD fallback) -----")
     typer.echo(pkg_md.prompt)

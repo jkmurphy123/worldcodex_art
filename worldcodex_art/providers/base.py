@@ -21,6 +21,7 @@ class ImageRequest:
     n: int = 1
     seed: int | None = None
     style_profile: str | None = None
+    image_style: str | None = None
     render_intent: str | None = None
     extra: dict[str, Any] | None = None  # provider-specific escape hatch
 

@@ -1,0 +1,20 @@
+{
+  "world": {
+    "world_bible_path": "/home/ubuntu/projects/worldcodex/worlds/titan-osa/docs/world_bible.md",
+    "world_bible_sha256": "2ef2af730b623d22d471c44186053e92be56499846938efb852c29beea67b40c",
+    "world_bible_json_path": "/home/ubuntu/projects/worldcodex/worlds/titan-osa/views/world_bible.json",
+    "world_bible_json_sha256": "8ad12448a871530aaab488a0e228cecd6d680806b3e9498eb90d90ce5af365a8"
+  },
+  "art": {
+    "size": "1024x1024",
+    "aspect": "square",
+    "style_profile": "industrial_amber",
+    "render_intent": "concept",
+    "palette": null,
+    "negative": "text, watermark, logo"
+  },
+  "provider": {
+    "name": "fal_ai",
+    "model": null
+  }
+}

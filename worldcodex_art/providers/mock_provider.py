@@ -27,6 +27,7 @@ class MockProvider:
                 f"size: {req.size}\n"
                 f"seed: {req.seed}\n"
                 f"style: {req.style_profile}\n"
+                f"image_style: {req.image_style}\n"
                 f"intent: {req.render_intent}\n\n"
                 f"prompt:\n{req.prompt}\n\n"
                 f"negative:\n{req.negative}\n"

@@ -4,7 +4,8 @@ from dataclasses import dataclass
 from typing import Callable
 
 from worldcodex_art.providers.mock_provider import MockProvider
-# later: from worldcodex_art.providers.openai_provider import OpenAIProvider
+from worldcodex_art.providers.fal_ai_provider import FalAIImageProvider
+from worldcodex_art.providers.openai_provider import OpenAIImageProvider
 
 ProviderFactory = Callable[[], object]
 
@@ -18,7 +19,8 @@ class StyleProfile:
 
 PROVIDERS: dict[str, ProviderFactory] = {
     "mock": lambda: MockProvider(),
-    # "openai": lambda: OpenAIProvider(),
+    "fal_ai": lambda: FalAIImageProvider(),
+    "openai": lambda: OpenAIImageProvider(),
 }
 
 STYLE_PROFILES: dict[str, StyleProfile] = {

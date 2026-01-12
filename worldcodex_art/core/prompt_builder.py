@@ -25,6 +25,7 @@ def build_prompt(
     size: str,
     palette: str | None = None,
     negative: str | None = None,
+    image_style: str | None = None,
 ) -> PromptPackage:
     sp = STYLE_PROFILES.get(style_profile)
     if not sp:
@@ -44,6 +45,8 @@ def build_prompt(
     if palette:
         parts.append(f"Palette emphasis: {palette}")
     parts.append(f"Render intent: {render_intent}")
+    if image_style:
+        parts.append(f"Image style override: {image_style}")
     parts.append("")
     parts.append("SUBJECT TO DEPICT:")
     parts.append(subject.strip())
@@ -62,5 +65,6 @@ def build_prompt(
             "render_intent": render_intent,
             "size": size,
             "palette": palette,
+            "image_style": image_style,
         },
     )
